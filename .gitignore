@@ -1,6 +1,7 @@
 # My Files
 /week*/data
 .DS_Store
+.gitignore.save
 
 # History files
 .Rhistory
