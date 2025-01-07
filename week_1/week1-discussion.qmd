@@ -1,0 +1,95 @@
+---
+title: "Week 1 Discussion"
+author: "Rachel Swick"
+format: html
+editor: visual
+---
+
+## Load Data
+```{r}
+# Load data
+library(tidyverse)
+library(janitor)
+library(usdata)
+```
+# Import Fracking Data
+
+```{r}
+fracking <- read_csv(here::here("week_1", "data", "registryupload_1.csv"))
+```
+# Clean the Data
+
+```{r}
+# Basic data exploration
+dim(fracking)
+str(fracking)
+```
+
+
+```{r}
+# Clean data
+fracking_clean <- fracking %>% 
+  clean_names() %>% 
+  mutate(job_start_date = str_remove(job_start_date, " AM")) %>% 
+  mutate(datetime_start = mdy_hms(job_start_date)) %>% 
+  mutate(year = year(datetime_start)) %>% 
+  select(datetime_start, year, state_name, well_name, total_base_water_volume) %>% 
+  mutate(state_name = str_to_title(state_name)) %>% 
+  filter(!str_detect(string = state_name, pattern = "\\?")) %>% 
+  mutate(state_name = ifelse(test = str_length(state_name) == 2,
+                             yes = abbr2state(state_name),
+                             no = state_name)) %>% 
+  mutate(state_name = case_when(
+    state_name == "Colordao" ~ "Colorado",
+    state_name == "Loiusiana" ~ "Louisiana",
+    state_name == "Louisianna" ~ "Louisiana",
+    state_name == "Lousiana" ~ "Louisiana",
+    state_name == "New Mexcio" ~ "New Mexico",
+    state_name == "Norh Dakota" ~ "North Dakota",
+    state_name == "Norht Dakota" ~ "North Dakota",
+    state_name == "North  Dakota" ~ "North Dakota",
+    state_name == "North Dakata" ~ "North Dakota",
+    state_name == "North Dakotta" ~ "North Dakota",
+    state_name == "Noth Dakota" ~ "North Dakota",
+    state_name == "Pennslvania" ~ "Pennsylvania",
+    state_name == "Pennsylavania" ~ "Pennsylvania",
+    state_name == "Pennsylvanya" ~ "Pennsylvania",
+    state_name == "Penssylvania" ~ "Pennsylvania",
+    state_name == "Texasa" ~ "Texas",
+    state_name == "Texs" ~ "Texas", 
+    state_name == "West Viginia" ~ "West Virginia",
+    state_name == "Wyominng" ~ "Wyoming", 
+    TRUE ~ state_name)) %>% 
+  filter(!state_name %in% c("Beaver", "Beckham", "Harper", "Hemphill", "Midland", "Roosevelt", "Rusk", "State", "Ward")) %>% 
+  mutate(state_abb = state2abbr(state_name)) %>% 
+  relocate(state_abb, .after = state_name) %>% 
+  rename(total_base_water_volume_gal = total_base_water_volume) %>% 
+  drop_na(total_base_water_volume_gal) %>% 
+  arrange(datetime_start)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
