@@ -1,0 +1,46 @@
+---
+title: "Week 3 Discussion"
+author: "Rachel Swick"
+date: January 21, 2025
+format: html
+editor: visual
+---
+# Writing Alt Text
+
+## Example 1: `{palmerpenguins}` ggplot
+```{r} 
+#| warning: false
+#| message: false
+#| eval: true
+#| echo: false
+#| fig-alt: "Stacked histogram of penguin body masses in grams for three species of penguins: Adelie, Chinstrap, and Gentoo. Gentoo penguins have the highest average body mass by 1500 grams."
+library(ggplot2)
+library(palmerpenguins)
+
+ggplot(data = penguins, aes(x = body_mass_g, fill = species)) +
+  geom_histogram(alpha = 0.5, 
+                 position = "identity") +
+  scale_fill_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Body mass (g)",
+       y = "Frequency",
+       title = "Penguin body masses")
+```
+
+##Example 2: From the New York Times
+![](nyt-monthly-temp.png){fig-alt="Dot plot of monthly global temperature compared with the average temperature for the 20th century. After 1975, all average monthly global temperatures are higher than the 20th century average."}
+
+## Example 3: Fig 1A from Chapman et al. 2024
+<img src="chapman-etal-2024.png" alt="Heat map of global species observations. Species observations are disproportionately from high-income countries in Europe and North America." width="700px">
+
+
+
+
+
+
+
+
+
+
+
+
+
