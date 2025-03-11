@@ -71,8 +71,7 @@ caption <- "Source: Bigfoot Field Researchers Organization"
 #......................create waffle chart.......................
 ggplot(ca_season_counts,
        aes(fill = season, values = n)) +
-  geom_waffle(color = "white", size = 0.3, n_rows = 10,
-              make_proportional = TRUE) +
+  geom_waffle(color = "white", size = 0.3, n_rows = 10) +
   coord_fixed(1) +
   scale_fill_manual(values = season_palette) +
   labs(title = title,
