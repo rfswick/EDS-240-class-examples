@@ -1,0 +1,50 @@
+
+```{r}
+# Clean data
+us_counties <- nri_counties %>% 
+  janitor::clean_names() %>% 
+  filter(state %in% state.name) %>% 
+  rename(fips = stcofips, "Risk Score" = risk_score) 
+```
+
+```{r}
+state <- map_data("state")
+california <- subset(state, region=="california") 
+counties <- map_data("county") %>% 
+  rename(county = subregion, state = region) 
+#  full_join(us_counties, join_by("state","county") )
+```
+
+```{r}
+# merge county climate and geospatial data
+merged_us <- full_join(counties, us_counties, join_by("state","county") )
+
+# THIS RUNS BUT IS NOT WORKING THE WAY IT IS SUPPOSED TO!!!
+```
+
+
+```{r}
+# plot_usmap(data = us_counties, values = "Risk Score", regions = "states", linewidth = 0.1) 
+ggplot(data = merged_us, aes(x=long, y=lat, group=group), fill = `Risk Score`) + 
+  geom_polygon(color = "white", linewidth = 0.01)+
+  geom_polygon(data=california, mapping=aes(x=long, y=lat, group=group), color = "red", linewidth = 1, alpha = 0) +
+  # gghighlight::gghighlight(`Risk Score` >= 90) +
+  # gghighlight::gghighlight(state == "California") +
+  # scale_fill_continuous(low = "white", high = "orange") + 
+  
+  labs(title = "FEMA National Risk Index Scores",
+       subtitle = "2023",
+       caption = "Source: FEMA National Risk Index (2023 Release)") +
+  theme_void() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    plot.caption = element_text(face = "italic",
+                                margin = margin(t = 10,
+                                                r = 5,
+                                                b = 0,
+                                                l = 5))
+  ) +
+  guides(fill = guide_colorbar(barwidth = 25, barheight = 0.75))
+  
+```

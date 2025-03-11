@@ -5,10 +5,12 @@ date: January 21, 2025
 format: html
 editor: visual
 ---
+
 # Writing Alt Text
 
 ## Example 1: `{palmerpenguins}` ggplot
-```{r} 
+
+```{r}
 #| warning: false
 #| message: false
 #| eval: true
@@ -26,21 +28,8 @@ ggplot(data = penguins, aes(x = body_mass_g, fill = species)) +
        title = "Penguin body masses")
 ```
 
-##Example 2: From the New York Times
-![](nyt-monthly-temp.png){fig-alt="Dot plot of monthly global temperature compared with the average temperature for the 20th century. After 1975, all average monthly global temperatures are higher than the 20th century average."}
+##Example 2: From the New York Times ![](nyt-monthly-temp.png){fig-alt="Dot plot of monthly global temperature compared with the average temperature for the 20th century. After 1975, all average monthly global temperatures are higher than the 20th century average."}
 
 ## Example 3: Fig 1A from Chapman et al. 2024
-<img src="chapman-etal-2024.png" alt="Heat map of global species observations. Species observations are disproportionately from high-income countries in Europe and North America." width="700px">
 
-
-
-
-
-
-
-
-
-
-
-
-
+<img src="chapman-etal-2024.png" alt="Heat map of global species observations. Species observations are disproportionately from high-income countries in Europe and North America." width="700px"/>
